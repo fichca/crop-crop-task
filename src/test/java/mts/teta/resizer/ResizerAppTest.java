@@ -1,5 +1,6 @@
 package mts.teta.resizer;
 
+import mts.teta.resizer.console.ResizerApp;
 import mts.teta.resizer.imageprocessor.BadAttributesException;
 import org.junit.jupiter.api.Test;
 
@@ -30,6 +31,7 @@ class ResizerAppTest {
     private static final Integer AUDIO_COVER_HEIGHT = 1425;
     private static final Integer AUDIO_COVER_WIDTH = 1425;
 
+
     @Test
     public void testReducingCover() throws Exception {
         final Integer reducedPreviewWidth = FILM_COVER_WIDTH - 500;
@@ -48,11 +50,11 @@ class ResizerAppTest {
         app.setOutputFile(new File(absolutePathOutput));
         app.setResizeWidth(reducedPreviewWidth);
         app.setResizeHeight(reducedPreviewHeight);
+        app.setOperation("resize");
         app.setQuality(100);
         app.call();
 
         BufferedImage reducedPreview = ImageIO.read(new File(absolutePathOutput));
-
         assertEquals(reducedPreview.getWidth(), reducedPreviewWidth);
         assertEquals(reducedPreview.getHeight(), reducedPreviewHeight);
     }
@@ -75,6 +77,7 @@ class ResizerAppTest {
         app.setOutputFile(new File(absolutePathOutput));
         app.setResizeWidth(reducedPreviewWidth);
         app.setResizeHeight(reducedPreviewHeight);
+        app.setOperation("resize");
         app.setQuality(100);
         app.call();
 
@@ -99,8 +102,11 @@ class ResizerAppTest {
         ResizerApp app = new ResizerApp();
         app.setInputFile(new File(absolutePathInput));
         app.setOutputFile(new File(absolutePathOutput));
+        app.setOperation("quality");
+
         app.setResizeHeight(BOOK_COVER_HEIGHT);
         app.setResizeWidth(BOOK_COVER_WIDTH);
+
         app.setQuality(BOOK_COVER_QUALITY);
         app.call();
 
