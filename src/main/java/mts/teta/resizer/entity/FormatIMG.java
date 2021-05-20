@@ -1,5 +1,5 @@
 package mts.teta.resizer.entity;
 
 public enum FormatIMG {
-     JPEG, BMP, PNG, PGM, FITS
+     JPG, JPEG, PNG, WEBP, jpg, jpeg, png, webp
 }

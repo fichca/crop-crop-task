@@ -14,14 +14,6 @@ import java.io.IOException;
 
 public class OperationServiceImpl implements OperationService{
 
-//    public static void main(String[] args) throws FileNotFoundException {
-//        long l = System.currentTimeMillis();
-//        OperationService operationService = new OperationService();
-//        File in = new File("src/main/java/mts/teta/resizer/picture/J_R_R_Tolkien_The_Hobbit_1937.jpg");
-//        File out = new File("src/main/java/mts/teta/resizer/picture/hui.jpg");
-//        operationService.crop1(out, in, 600, 500, 200, 300);
-//        System.out.println(System.currentTimeMillis() - l);
-//    }
 
     public boolean resize(ResizerApp resizerApp) {
         int resizeWidth = resizerApp.getResizeWidth();
@@ -72,15 +64,13 @@ public class OperationServiceImpl implements OperationService{
         File outputFile = resizerApp.getOutputFile();
         int quality = resizerApp.getQuality();
 
-        BufferedImage read = null;
+        BufferedImage read;
         try {
             read = ImageIO.read(resizerApp.getInputFile());
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
-//        int width = read.getWidth();
-//        int height = read.getHeight();
-
         int width = resizerApp.getResizeWidth();
         int height = resizerApp.getResizeHeight();
 
@@ -95,12 +85,11 @@ public class OperationServiceImpl implements OperationService{
             return true;
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
 
-    // TODO: 18.05.2021 need realization
     public boolean blur(ResizerApp resizerApp) {
 
         int blurRadius = resizerApp.getBlurRadius();
@@ -111,11 +100,10 @@ public class OperationServiceImpl implements OperationService{
         return true;
     }
 
-    // TODO: 18.05.2021 need realization
     public boolean format(ResizerApp resizerApp) {
         String format = resizerApp.getFormat();
         File outputFile = resizerApp.getOutputFile();
-        BufferedImage read = null;
+        BufferedImage read;
         try {
             read = ImageIO.read(resizerApp.getInputFile());
         } catch (IOException e) {
@@ -123,28 +111,13 @@ public class OperationServiceImpl implements OperationService{
             return false;
         }
         try {
-            Thumbnails.of(read).outputFormat(format).toFile(outputFile);
+            int height = read.getHeight();
+            int width = read.getWidth();
+            Thumbnails.of(read).forceSize(width, height).outputFormat(format).toFile(outputFile);
             return true;
         } catch (IOException ioException) {
             ioException.printStackTrace();
             return false;
         }
     }
-
-
-//    public void crop1(File outputFile, File inputFile,int resizeWidth, int resizeHeight, int x, int y ) {
-//
-//        MarvinImage imageIn = MarvinImageIO.loadImage(inputFile.getPath());
-//        MarvinImage imageOut = imageIn.clone();
-//        Crop crop = new Crop();
-//        crop.load();
-//
-//        crop.setAttribute("x", x);
-//        crop.setAttribute("y", y);
-//        crop.setAttribute("width", resizeWidth);
-//        crop.setAttribute("height", resizeHeight);
-//
-//        crop.process(imageIn, imageOut);
-//        MarvinImageIO.saveImage(imageOut, outputFile.getPath());
-//    }
 }

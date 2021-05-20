@@ -13,6 +13,7 @@ public class ValidOperation implements OperationService {
 
     private final static String errorNegative = " cannot be negative";
 
+
     public boolean resize(ResizerApp resizerApp) {
         File outputFile = resizerApp.getOutputFile();
         File inputFile = resizerApp.getInputFile();
@@ -20,9 +21,9 @@ public class ValidOperation implements OperationService {
         int resizeWidth = resizerApp.getResizeWidth();
 
         try {
-            validFiles(inputFile, outputFile);
-            validWidthAndHeight(resizeHeight, resizeWidth);
-            return true;
+            if (validFiles(inputFile, outputFile)){
+                return validWidthAndHeight(resizeHeight, resizeWidth);
+            }
         } catch (BadAttributesException e) {
             e.printStackTrace();
         }
@@ -41,9 +42,9 @@ public class ValidOperation implements OperationService {
         try {
             validFiles(inputFile, outputFile);
             validWidthAndHeight(resizeHeight, resizeWidth);
-            if (x <= 0) {
+            if (x < 0) {
                 throw new BadAttributesException(INVALID_PARAMETER_X + errorNegative);
-            } else if (y <= 0) {
+            } else if (y < 0) {
                 throw new BadAttributesException(INVALID_PARAMETER_Y + errorNegative);
             }
             return true;
@@ -60,20 +61,15 @@ public class ValidOperation implements OperationService {
 
         try {
             validFiles(inputFile, outputFile);
-            if (quality <= 0) {
+            if (quality < 0) {
                 throw new BadAttributesException(INVALID_PARAMETER_QUALITY + errorNegative);
-            } else if (quality >= 100) {
+            } else if (quality > 100) {
                 throw new BadAttributesException(INVALID_PARAMETER_QUALITY + " cannot be more than 100");
             }
             return true;
         } catch (BadAttributesException e) {
             e.printStackTrace();
         }
-//        if (inputFile != null && outputFile != null && 0 < quality && quality < 100) {
-////            if (outputFile.canWrite()) {
-//            return inputFile.canRead();
-////            }
-//        }
         return false;
     }
 
@@ -83,18 +79,13 @@ public class ValidOperation implements OperationService {
         int blurRadius = resizerApp.getBlurRadius();
         try {
             validFiles(inputFile, outputFile);
-            if (0 <= blurRadius) {
+            if (0 > blurRadius) {
                 throw new BadAttributesException(INVALID_PARAMETER_BLUR + errorNegative);
             }
             return true;
         } catch (BadAttributesException e) {
             e.printStackTrace();
         }
-//        if (inputFile != null && outputFile != null && 0 < blurRadius) {
-////            if (outputFile.canWrite()) {
-//            return inputFile.canRead();
-////            }
-//        }
         return false;
     }
 
@@ -119,38 +110,37 @@ public class ValidOperation implements OperationService {
             e.printStackTrace();
         }
 
-//        if (inputFile != null && outputFile != null && format != null) {
-//
-//            try {
-//                FormatIMG.valueOf(format);
-//            } catch (IllegalArgumentException e) {
-//                return false;
-//            }
-////            if (outputFile.canWrite()) {
-//            return inputFile.canRead();
-////            }
-//        }
         return false;
     }
 
-    private void validFiles(File input, File output) throws BadAttributesException {
+    private boolean validFiles(File input, File output) throws BadAttributesException {
         if (!input.getPath().equals(FILE_NOT_FOUND)) {
-            if (!input.canRead()) {
-                throw new BadAttributesException(INVALID_PARAMETER_INPUT_FILE + "cannot read input file");
+            if (input.getPath().contains(".png") || input.getPath().contains(".jpg")){
+                if (!input.canRead()) {
+                    throw new BadAttributesException(INVALID_PARAMETER_INPUT_FILE + "cannot read input file");
+                }
+            } else {
+                throw new BadAttributesException(INVALID_PARAMETER_INPUT_FILE + "invalid format");
             }
+
         } else {
             throw new BadAttributesException(INVALID_PARAMETER_INPUT_FILE + "write input file");
         }
         if (output.getPath().equals(FILE_NOT_FOUND)) {
             throw new BadAttributesException(INVALID_PARAMETER_OUTPUT_FILE + "write output file");
+        } else {
+            return true;
         }
     }
 
-    private void validWidthAndHeight(int resizeHeight, int resizeWidth) throws BadAttributesException {
-        if (resizeHeight <= 0) {
-            throw new BadAttributesException(INVALID_PARAMETER_HEIGHT);
-        } else if (resizeWidth <= 0) {
-            throw new BadAttributesException(INVALID_PARAMETER_WIDTH);
+
+    private boolean validWidthAndHeight(int resizeHeight, int resizeWidth) throws BadAttributesException {
+        if (resizeHeight < 0) {
+            throw new BadAttributesException(INVALID_PARAMETER_HEIGHT  + errorNegative);
         }
+        if (resizeWidth < 0) {
+            throw new BadAttributesException(INVALID_PARAMETER_WIDTH  + errorNegative);
+        }
+        return true;
     }
 }

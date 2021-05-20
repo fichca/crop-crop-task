@@ -14,7 +14,7 @@ public class ConsoleAttributes {
     @CommandLine.Parameters(paramLabel = "FILE", defaultValue = ConstantsException.FILE_NOT_FOUND, description = "output file")
     private File outputFile;
 
-    @CommandLine.Option(names = "-he",  description = "height")
+    @CommandLine.Option(names = "-he", description = "height")
     protected int resizeHeight;
 
     @CommandLine.Option(names = "-w",  description = "width")
@@ -119,20 +119,4 @@ public class ConsoleAttributes {
         this.operation = operation;
     }
 
-
-    //    @CommandLine.Option(names={"-vwh", "--resize width height"}, description="resize the image")
-//    private boolean resize;
-//
-//    @CommandLine.Option(names={"-qv", "--quality value"}, description="PEG/PNG compression level")
-//    private boolean qualityValue;
-//
-//    @CommandLine.Option(names={"-cwh", "--crop width height x y"}, description="сut out one or more rectangular regions of the image")
-//    private Integer[] integers;
-//
-//
-//    @CommandLine.Option(names={"-b", "--blur {radius}"}, description="reduce image noise and reduce detail levels")
-//    private boolean blur;
-//
-//    @CommandLine.Option(names={"-f", "--format \"outputFormat\""}, description="output formatted image characteristics")
-//    private boolean format;
 }

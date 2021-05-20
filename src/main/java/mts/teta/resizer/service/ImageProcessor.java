@@ -30,6 +30,7 @@ public class ImageProcessor {
             declaredMethod.invoke(operationService, resizerApp);
         } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
+            e.printStackTrace();
         }
     }
 }
