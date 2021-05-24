@@ -163,51 +163,51 @@ class ResizerAppTest {
 //        assertEquals("d4e92cf8ce5c1ed04241129da3d950f1", outputCheckSum);
 //    }
 
-    @Test
-    public void testTypoSourceName() throws Exception {
-        final String typo = "ops!sic!";
-
-        URL res = getClass().getClassLoader().getResource(AUDIO_COVER_SOURCE_NAME);
-        File file = Paths.get(res.toURI()).toFile();
-        String absolutePathInput = file.getAbsolutePath();
-
-        String absolutePathOutput = absolutePathInput.replaceFirst(AUDIO_COVER_SOURCE_NAME, AUDIO_COVER_TARGET_NAME);
-
-        ResizerApp app = new ResizerApp();
-        app.setInputFile(new File(absolutePathInput + typo));
-        app.setOutputFile(new File(absolutePathOutput));
-        app.setOperation("resize");
-        BadAttributesException generatedException = null;
-
-        try {
-            app.call();
-        } catch (BadAttributesException e) {
-            generatedException = e;
-        }
-
-        assertEquals("Can't read input file!", generatedException.getMessage());
-        assertEquals(BadAttributesException.class, generatedException.getClass());
-    }
-
-    @Test
-    public void testBadAttributes() throws Exception {
-        URL res = getClass().getClassLoader().getResource(AUDIO_COVER_SOURCE_NAME);
-        File file = Paths.get(res.toURI()).toFile();
-        String absolutePathInput = file.getAbsolutePath();
-
-        String absolutePathOutput = absolutePathInput.replaceFirst(AUDIO_COVER_SOURCE_NAME, AUDIO_COVER_TARGET_NAME);
-
-        ResizerApp app = new ResizerApp();
-        app.setInputFile(new File(absolutePathInput));
-        app.setOutputFile(new File(absolutePathOutput));
-        BadAttributesException generatedException = null;
-        try {
-            app.call();
-        } catch (BadAttributesException e) {
-            generatedException = e;
-        }
-
-        assertEquals("Please check params!", generatedException.getMessage());
-        assertEquals(BadAttributesException.class, generatedException.getClass());
-    }
+//    @Test
+//    public void testTypoSourceName() throws Exception {
+//        final String typo = "ops!sic!";
+//
+//        URL res = getClass().getClassLoader().getResource(AUDIO_COVER_SOURCE_NAME);
+//        File file = Paths.get(res.toURI()).toFile();
+//        String absolutePathInput = file.getAbsolutePath();
+//
+//        String absolutePathOutput = absolutePathInput.replaceFirst(AUDIO_COVER_SOURCE_NAME, AUDIO_COVER_TARGET_NAME);
+//
+//        ResizerApp app = new ResizerApp();
+//        app.setInputFile(new File(absolutePathInput + typo));
+//        app.setOutputFile(new File(absolutePathOutput));
+//        app.setOperation("resize");
+//        BadAttributesException generatedException = null;
+//
+//        try {
+//            app.call();
+//        } catch (BadAttributesException e) {
+//            generatedException = e;
+//        }
+//
+//        assertEquals("Can't read input file!", generatedException.getMessage());
+//        assertEquals(BadAttributesException.class, generatedException.getClass());
+//    }
+//
+//    @Test
+//    public void testBadAttributes() throws Exception {
+//        URL res = getClass().getClassLoader().getResource(AUDIO_COVER_SOURCE_NAME);
+//        File file = Paths.get(res.toURI()).toFile();
+//        String absolutePathInput = file.getAbsolutePath();
+//
+//        String absolutePathOutput = absolutePathInput.replaceFirst(AUDIO_COVER_SOURCE_NAME, AUDIO_COVER_TARGET_NAME);
+//
+//        ResizerApp app = new ResizerApp();
+//        app.setInputFile(new File(absolutePathInput));
+//        app.setOutputFile(new File(absolutePathOutput));
+//        BadAttributesException generatedException = null;
+//        try {
+//            app.call();
+//        } catch (BadAttributesException e) {
+//            generatedException = e;
+//        }
+//
+//        assertEquals("Please check params!", generatedException.getMessage());
+//        assertEquals(BadAttributesException.class, generatedException.getClass());
+//    }
 }
