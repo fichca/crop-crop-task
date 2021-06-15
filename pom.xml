@@ -65,7 +65,8 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>mts.teta.resizer.console.ResizerApp</mainClass>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>mts/teta/resizer/console/ResizerApp</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
